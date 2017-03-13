@@ -13,7 +13,7 @@ export class FormFilterPipe implements PipeTransform {
 		if (!filter.trim())
 			return array
 
-		let filterStr = filter.toLowerCase()
+		let filterStr = filter.toString().toLowerCase()
 
 		return array.filter(item =>
 			fields.reduce( (prev: boolean, value:string) => {
@@ -22,7 +22,7 @@ export class FormFilterPipe implements PipeTransform {
 
 				let str = item[value]
 
-				return prev || str.toLowerCase().indexOf(filterStr) >= 0
+				return prev || str.toString().toLowerCase().indexOf(filterStr) >= 0
 			}, false)
 		)
 	}
