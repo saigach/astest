@@ -22,8 +22,11 @@ export class AppComponent implements OnInit {
     filterDuration: number
 
 	getMessages(): void {
-        this.MessageService.getMessages().then(messages => this.MessagesList = messages);
-	}
+        //this.MessageService.getMessages();
+        this.MessageService.getMessages().subscribe(data => {
+          this.MessagesList = data
+        });
+    }
 	ngOnInit(): void {
 		this.getMessages();
 	}
@@ -31,6 +34,6 @@ export class AppComponent implements OnInit {
     resetForm(): void {
         this.filterDate = 0
         this.filterNumber = ''
-        this.filterDuration = 0
+        this.filterDuration = ''
     }
 }
