@@ -1,0 +1,237 @@
+/****************
+Reset *******************/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/****************
+Typography *******************/
+body {
+	font: 14px/140% 'Verdana';
+}
+h1 {
+    font-size: 30px;
+	line-height: 140%;
+    font-weight: 300;
+	margin-bottom: 15px;
+	font-family: 'Tahoma';
+}
+hr {
+    margin: 0 -30px;
+	background: 0;
+	border: 0;
+	border-top: 1px solid #ccc;
+}
+/****************
+Layout *******************/
+.container {
+    width: 1000px;
+    box-sizing: border-box;
+    padding: 15px 30px;
+}
+
+
+.filter {
+	padding: 30px 0;
+}
+
+.row {
+	margin-left: -6px;
+	margin-right: -6px;
+}
+.row:before,
+.row:after,
+.cf:before,
+.cf:after {
+	content: ' ';
+	display: table;
+}
+.row:after, .cf:after {
+	clear: both;
+}
+.col-1-4 {
+    width: 25%;
+    float: left;
+	box-sizing: border-box;
+	padding: 0 6px;
+}
+
+/****************
+Form *******************/
+.form-input {
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 4px;
+	box-sizing: border-box;
+}
+
+.form-button {
+	height: 30px;
+	background-color: transparent;
+	border: 2px dashed #98bfe7;
+	color: #98bfe7;
+	font-size: 14px;
+	font-weight: bold;
+	transition: 0.2s all;
+}
+.form-button:hover {
+	border: 2px dashed #fff;
+	color: #fff;
+	background-color: #98bfe7;
+}
+/****************
+Filter Form *******************/
+.filter .form-input {
+	width: 100%;
+}
+.form-button {
+	width: 100%;
+}
+.filter label {
+	font-weight: bold;
+	margin-bottom: 6px;
+	display: inline-block;
+}
+/****************
+Filter Form *******************/
+.messages-list {
+	width: 100%;
+	margin-bottom: 25px;
+}
+.messages-list thead th {
+	border-bottom: 2px solid #b11313;
+	text-align: left;
+	font-weight: bold;
+}
+.messages-list tbody tr:nth-child(even) {
+	background-color: #f6f6f6;
+}
+.messages-list tbody tr:hover td {
+	color: #b11313;
+}
+.messages-list td, .messages-list th {
+	padding: 8px;
+}
+
+/****************
+Nav *******************/
+.pagenav {
+	text-align: center;
+}
+.pagenav li {
+	display: inline-block;
+	margin: 0 6px;
+}
+.pagenav li a {
+	display: block;
+	padding: 6px;
+	text-decoration: none;
+	color: #0361c5;
+}
+.pagenav li a:hover,
+.pagenav li a.active {
+	background-color: #eee;
+	color: #000;
+}
+.pagenav li a.pagenav-prev,
+.pagenav li a.pagenav-next {
+	border: 1px solid #0361c5;
+	border-radius: 50%;
+	text-indent: -9999px;
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	position: relative;
+}
+.pagenav li a.pagenav-prev:hover,
+.pagenav li a.pagenav-next:hover {
+	background: transparent;
+	border-color: #023871;
+}
+.pagenav li a.pagenav-prev:after,
+.pagenav li a.pagenav-prev:before,
+.pagenav li a.pagenav-next:after,
+.pagenav li a.pagenav-next:before {
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.pagenav li a.pagenav-prev:after, .pagenav li a.pagenav-prev:before {
+	right: 50%;
+	margin-right: -2px;
+
+}
+.pagenav li a.pagenav-prev:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #fff;
+	border-width: 3px;
+	margin-top: -3px;
+}
+.pagenav li a.pagenav-prev:before {
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: inherit;
+	border-width: 5px;
+	margin-top: -5px;
+}
+
+.pagenav li a.pagenav-next:after, .pagenav li a.pagenav-next:before {
+	left: 50%;
+	margin-left: -2px;
+}
+.pagenav li a.pagenav-next:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-left-color: #fff;
+	border-width: 3px;
+	margin-top: -3px;
+}
+.pagenav li a.pagenav-next:before {
+	border-color: rgba(255, 255, 255, 0);
+	border-left-color: inherit;
+	border-width: 5px;
+	margin-top: -5px;
+}

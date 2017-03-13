@@ -1,0 +1,55 @@
+<h1>Голосовая почта</h1>
+<hr>
+<form action="" class="filter">
+    <div class="row">
+        <div class="col-1-4">
+            <label for="">Период</label>
+            <select name="filterDate" id="" class="form-input" [(ngModel)]="filterDate">
+                <option *ngFor="let msg of MessagesList" [ngValue]="msg">{{msg?.Received | date:'short'}}</option>
+            </select>
+        </div>
+        <div class="col-1-4">
+            <label for="">Номер</label>
+            <input #filterInput (keyup)="0" name="filterNumber" type="text" class="form-input" [(ngModel)]="filterNumber">
+        </div>
+        <div class="col-1-4">
+            <label for="">Длительность</label>
+            <select name="filterDuration" id="" class="form-input" [(ngModel)]="filterDuration">
+                <option *ngFor="let msg of MessagesList" [ngValue]="msg">{{msg?.Duration}}</option>
+            </select>
+        </div>
+        <div class="col-1-4">
+            <label for="">&nbsp;</label>
+            <button class="form-button form-button-reset" (click)="resetForm()">Сбросить фильтр</button>
+        </div>
+    </div>
+</form>
+
+<table class="messages-list">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Номер</th>
+            <th>Запись сообщения</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let msg of (MessagesList | formFilter : filterInput.value : ['From'])">
+            <td>{{msg.Received | date:'short'}}</td>
+            <td>{{msg.From}}</td>
+            <td>{{msg.Duration}}</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="pagenav">
+    <li><a href="" class="pagenav-prev">prev</a></li>
+    <li><a href="" class="active">1</a></li>
+    <li><a href="">2</a></li>
+    <li><a href="">3</a></li>
+    <li><a href="">4</a></li>
+    <li><a href="">5</a></li>
+    <li><a href="" class="pagenav-next">next</a></li>
+</ul>
