@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Message } from './message';
-import { MESSAGES } from './mock-message';
 import { FormFilterPipe } from './pipe';
 
 
@@ -31,18 +30,20 @@ export class MessageService {
   private extractData(res: Response) {
 	let parser = new DOMParser()
     let xmlDoc = parser.parseFromString(res.text(), "text/xml")
-	let MESSAGES = []
+	let MESSAGES:Message[] = []
 	if (xmlDoc.hasChildNodes()) {
 	let chldrn = xmlDoc.getElementsByTagName("Data")
 		console.log(chldrn[5])
-	for(let i=0; i<chldrn.length; i++) {
-		let message = new Message()
-	    message.Received = chldrn[i].children[0].textContent;
-		message.From = chldrn[i].children[1].textContent;
-		message.Duration = parseInt(chldrn[i].children[5].textContent);
-		MESSAGES.push(message)
+		for(let i=0; i<chldrn.length; i++) {
+			let message = new Message()
+		    message.Received = chldrn[i].children[0].textContent;
+			message.From = chldrn[i].children[1].textContent;
+			message.Duration = parseInt(chldrn[i].children[5].textContent);
+			message.MIME = chldrn[i].children[4].children[0].getAttribute('subtype');
+			message.Filename = chldrn[i].children[4].children[0].getAttribute('Disposition-filename');
+			MESSAGES.push(message)
+		}
 	}
-}
     return MESSAGES || [];
   }
 

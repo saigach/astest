@@ -34,6 +34,14 @@ export class AppComponent implements OnInit {
     resetForm(): void {
         this.filterDate = 0
         this.filterNumber = ''
-        this.filterDuration = ''
+        this.filterDuration = null
+    }
+
+    downloadFile($event: any, id:number): void {
+        let msg = this.MessagesList[id]
+        var data = msg.Filename,
+        blob = new Blob([data], { type: 'audio/' + msg.MIME }),
+        url = window.URL.createObjectURL(blob)
+        window.URL.revokeObjectURL(url)
     }
 }
