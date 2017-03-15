@@ -4,12 +4,13 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { MessageService } from './app.service';
 import { Message } from './message';
-import { FormFilterPipe } from './pipe';
+import { FromFilterPipe, DurationFilterPipe } from './pipe';
+import { DateFilterPipe, secPipe } from './date.pipe';
 
 @Component({
     selector: 'my-app',
     templateUrl: '/app/app.component.html',
-	providers: [MessageService, FormFilterPipe]
+	providers: [MessageService, FromFilterPipe, DateFilterPipe, secPipe, DurationFilterPipe]
 })
 
 export class AppComponent implements OnInit {
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
 	constructor(private MessageService: MessageService) { }
 
 	MessagesList: Message[]
-    filterDate: number
+    filterDate: string = ''
     filterNumber: string
     filterDuration: number
 
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
 	}
 
     resetForm(): void {
-        this.filterDate = 0
+        this.filterDate = ''
         this.filterNumber = ''
         this.filterDuration = null
     }
@@ -43,5 +44,9 @@ export class AppComponent implements OnInit {
         blob = new Blob([data], { type: 'audio/' + msg.MIME }),
         url = window.URL.createObjectURL(blob)
         window.URL.revokeObjectURL(url)
+    }
+
+    onChange(val: any): void {
+        this.filterDate = val;
     }
 }

@@ -5,7 +5,12 @@
         <div class="col-1-4">
             <label for="">Период</label>
             <select #filterInputDate name="filterDate" id="" class="form-input" [(ngModel)]="filterDate">
-                <option *ngFor="let msg of MessagesList" [value]="msg.Received">{{msg.Received | date:'short'}}</option>
+                <option value="">за все время</option>
+                <option value="Today">за сегодня</option>
+                <option value="Yesterday">за вчера</option>
+                <option value="Last7Days">за последнюю неделю</option>
+                <option value="ThisMonth">за текущий месяц</option>
+                <option value="LastYear">за прошлый год</option>
             </select>
         </div>
         <div class="col-1-4">
@@ -15,7 +20,10 @@
         <div class="col-1-4">
             <label for="">Длительность</label>
             <select #filterInputDuration name="filterDuration" id="" class="form-input" [(ngModel)]="filterDuration">
-                <option *ngFor="let msg of MessagesList" [value]="msg.Duration">{{msg.Duration}}</option>
+                <option value="60">до 1 минуты</option>
+                <option value="180">до 3 минут</option>
+                <option value="300">до 5 минут</option>
+                <option value="600">до 10 минут</option>
             </select>
         </div>
         <div class="col-1-4">
@@ -35,12 +43,12 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let msg of (MessagesList | formFilter : filterInputNumber.value : ['From'] | formFilter : filterInputDuration.value : ['Duration'] | formFilter : filterInputDate.value : ['Received'])">
-            <td>{{msg.Received | date:'short'}}</td>
+        <tr *ngFor="let msg of (MessagesList | fromFilter : filterInputNumber.value : ['From'] | dateFilter : filterInputDate.value : ['Received'] | durationFilter : filterInputDuration.value : ['Duration']) | slice:1:10">
+            <td>{{msg.Received | date:'dd.MM HH:mm'}}</td>
             <td>{{msg.From}}</td>
             <td><audio controls="controls" preload="none">
                   <source type="audio/wav" src="/media/{{msg.Filename}}"/>
-                </audio> {{msg.Duration}}</td>
+              </audio> {{msg.Duration | secPipe}}</td>
             <td>
                 <a href="/media/{{msg.Filename}}" download="{{msg.Filename}}" (click)="downloadFile($event, msg.id)"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhElEQVQ4T2NkoBAw4tH/H00Oq9pRAxgYBmcYzAJGXyqO6J0NFE9DlsPmBXagggNAbIFmyHEg3xGIfxIyACQvBcRngVgCqvgFkDYG4mfoLoO5AJbqkF1kBXUJSI8DEB9D0gxXj88AkPp0IAYpBoULMiDaABxhCTYUBBjRXYBLAy5xyg0AAIP1GxE/KA4uAAAAAElFTkSuQmCC" alt=""></a>
             </td>

@@ -4,8 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Message } from './message';
-import { FormFilterPipe } from './pipe';
-
 
 
 @Injectable()
@@ -33,7 +31,7 @@ export class MessageService {
 	let MESSAGES:Message[] = []
 	if (xmlDoc.hasChildNodes()) {
 	let chldrn = xmlDoc.getElementsByTagName("Data")
-		console.log(chldrn[5])
+		//console.log(chldrn[5])
 		for(let i=0; i<chldrn.length; i++) {
 			let message = new Message()
 		    message.Received = chldrn[i].children[0].textContent;
