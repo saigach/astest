@@ -45,13 +45,11 @@ export class AppComponent implements OnInit {
     this.filterDate = ''
     this.filterNumber = ''
     this.filterDuration = null
+    this.PagerService.initPager(this.MessagesList)
   }
 
-  downloadFile(id: number): void {
-    this.MessageService.downloadFile(this.MessagesList[id])
-  }
-
-  onChange(val: any): void {
-    this.filterDate = val;
-  }
+  /*downloadFile($event:Event, id: number): void {
+      $event.preventDefault()
+      this.MessageService.downloadFile(this.MessagesList[id])
+  }*/
 }

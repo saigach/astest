@@ -34,12 +34,13 @@ export class MessageService {
       //console.log(chldrn[5])
       for (let i = 0; i < chldrn.length; i++) {
         let message = new Message()
-        message.Received = chldrn[i].children[0].textContent;
-        message.From = chldrn[i].children[1].textContent;
-        message.Duration = parseInt(chldrn[i].children[5].textContent);
-        message.MIME = chldrn[i].children[4].children[0].getAttribute('subtype');
-        message.Filename = chldrn[i].children[4].children[0].getAttribute('Disposition-filename');
-        MESSAGES.push(message)
+		message.id = i
+        message.Received = chldrn[i].children[0].textContent
+        message.From = chldrn[i].children[1].textContent
+        message.Duration = parseInt(chldrn[i].children[5].textContent)
+        message.MIME = chldrn[i].children[4].children[0].getAttribute('subtype')
+        message.Filename = chldrn[i].children[4].children[0].getAttribute('Disposition-filename')
+        MESSAGES[i] = message
       }
     }
     return MESSAGES || [];
@@ -59,11 +60,10 @@ export class MessageService {
     return Observable.throw(errMsg);
   }
 
-  downloadFile(msg:Message): void {
-	  console.log(msg)
+  /*downloadFile(msg:Message): void {
 	  var data = msg.Filename,
 	  blob = new Blob([data], { type: 'audio/' + msg.MIME }),
 	  url = window.URL.createObjectURL(blob)
-	  window.URL.revokeObjectURL(url)
-  }
+      window.URL.revokeObjectURL(url);
+  }*/
 }

@@ -15,7 +15,7 @@
         </div>
         <div class="col-1-4">
             <label for="">Номер</label>
-            <input #filterInputNumber (keyup)="0" name="filterNumber" type="text" class="form-input" [(ngModel)]="filterNumber">
+            <input #filterInputNumber (keyup)="0" name="filterNumber" type="text" class="form-input search-field" [(ngModel)]="filterNumber">
         </div>
         <div class="col-1-4">
             <label for="">Длительность</label>
@@ -50,7 +50,7 @@
                   <source type="audio/wav" src="/media/{{msg.Filename}}"/>
               </audio> {{msg.Duration | secPipe}}</td>
             <td>
-                <a href="/media/{{msg.Filename}}" download="{{msg.Filename}}" (click)="downloadFile(msg.id)"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhElEQVQ4T2NkoBAw4tH/H00Oq9pRAxgYBmcYzAJGXyqO6J0NFE9DlsPmBXagggNAbIFmyHEg3xGIfxIyACQvBcRngVgCqvgFkDYG4mfoLoO5AJbqkF1kBXUJSI8DEB9D0gxXj88AkPp0IAYpBoULMiDaABxhCTYUBBjRXYBLAy5xyg0AAIP1GxE/KA4uAAAAAElFTkSuQmCC" alt=""></a>
+                <a href="/media/{{msg.Filename}}" download="{{msg.Filename}}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhElEQVQ4T2NkoBAw4tH/H00Oq9pRAxgYBmcYzAJGXyqO6J0NFE9DlsPmBXagggNAbIFmyHEg3xGIfxIyACQvBcRngVgCqvgFkDYG4mfoLoO5AJbqkF1kBXUJSI8DEB9D0gxXj88AkPp0IAYpBoULMiDaABxhCTYUBBjRXYBLAy5xyg0AAIP1GxE/KA4uAAAAAElFTkSuQmCC" alt=""></a>
             </td>
         </tr>
     </tbody>
