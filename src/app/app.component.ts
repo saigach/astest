@@ -6,47 +6,52 @@ import { MessageService } from './app.service';
 import { Message } from './message';
 import { FromFilterPipe, DurationFilterPipe } from './pipe';
 import { DateFilterPipe, secPipe } from './date.pipe';
+import { PagerService } from './pager.service';
 
 @Component({
-    selector: 'my-app',
-    templateUrl: '/app/app.component.html',
-	providers: [MessageService, FromFilterPipe, DateFilterPipe, secPipe, DurationFilterPipe]
+  selector: 'my-app',
+  templateUrl: '/app/app.component.html',
+  providers: [MessageService, FromFilterPipe, DateFilterPipe, secPipe, DurationFilterPipe, PagerService]
 })
 
 export class AppComponent implements OnInit {
 
-	constructor(private MessageService: MessageService) { }
+  constructor(private MessageService: MessageService, private durationFilter: DurationFilterPipe, private PagerService: PagerService) { };
 
-	MessagesList: Message[]
-    filterDate: string = ''
-    filterNumber: string
-    filterDuration: number
+  MessagesList: Message[]
+  filterDate: string = ''
+  filterNumber: string
+  filterDuration: number
 
-	getMessages(): void {
-        //this.MessageService.getMessages();
-        this.MessageService.getMessages().subscribe(data => {
-          this.MessagesList = data
-        });
-    }
-	ngOnInit(): void {
-		this.getMessages();
-	}
+  pager = {
+    numOfItems: 10,
+    curPage: 1,
+    totalPages: 0,
+    numbers: Array()
+  }
 
-    resetForm(): void {
-        this.filterDate = ''
-        this.filterNumber = ''
-        this.filterDuration = null
-    }
+  getMessages(): void {
+    //this.MessageService.getMessages();
+    this.MessageService.getMessages().subscribe(data => {
+      this.MessagesList = data
+      this.PagerService.initPager(this.MessagesList)
+    });
+  }
+  ngOnInit(): void {
+    this.getMessages();
+  }
 
-    downloadFile($event: any, id:number): void {
-        let msg = this.MessagesList[id]
-        var data = msg.Filename,
-        blob = new Blob([data], { type: 'audio/' + msg.MIME }),
-        url = window.URL.createObjectURL(blob)
-        window.URL.revokeObjectURL(url)
-    }
+  resetForm(): void {
+    this.filterDate = ''
+    this.filterNumber = ''
+    this.filterDuration = null
+  }
 
-    onChange(val: any): void {
-        this.filterDate = val;
-    }
+  downloadFile(id: number): void {
+    this.MessageService.downloadFile(this.MessagesList[id])
+  }
+
+  onChange(val: any): void {
+    this.filterDate = val;
+  }
 }

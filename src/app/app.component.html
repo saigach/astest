@@ -43,25 +43,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let msg of (MessagesList | fromFilter : filterInputNumber.value : ['From'] | dateFilter : filterInputDate.value : ['Received'] | durationFilter : filterInputDuration.value : ['Duration']) | slice:1:10">
+        <tr *ngFor="let msg of (MessagesList | fromFilter : filterInputNumber.value : ['From'] | dateFilter : filterInputDate.value : ['Received'] | durationFilter : filterInputDuration.value : ['Duration'] | slice:PagerService.pager.curPage:(PagerService.pager.curPage+PagerService.pager.numOfItems))">
             <td>{{msg.Received | date:'dd.MM HH:mm'}}</td>
             <td>{{msg.From}}</td>
             <td><audio controls="controls" preload="none">
                   <source type="audio/wav" src="/media/{{msg.Filename}}"/>
               </audio> {{msg.Duration | secPipe}}</td>
             <td>
-                <a href="/media/{{msg.Filename}}" download="{{msg.Filename}}" (click)="downloadFile($event, msg.id)"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhElEQVQ4T2NkoBAw4tH/H00Oq9pRAxgYBmcYzAJGXyqO6J0NFE9DlsPmBXagggNAbIFmyHEg3xGIfxIyACQvBcRngVgCqvgFkDYG4mfoLoO5AJbqkF1kBXUJSI8DEB9D0gxXj88AkPp0IAYpBoULMiDaABxhCTYUBBjRXYBLAy5xyg0AAIP1GxE/KA4uAAAAAElFTkSuQmCC" alt=""></a>
+                <a href="/media/{{msg.Filename}}" download="{{msg.Filename}}" (click)="downloadFile(msg.id)"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhElEQVQ4T2NkoBAw4tH/H00Oq9pRAxgYBmcYzAJGXyqO6J0NFE9DlsPmBXagggNAbIFmyHEg3xGIfxIyACQvBcRngVgCqvgFkDYG4mfoLoO5AJbqkF1kBXUJSI8DEB9D0gxXj88AkPp0IAYpBoULMiDaABxhCTYUBBjRXYBLAy5xyg0AAIP1GxE/KA4uAAAAAElFTkSuQmCC" alt=""></a>
             </td>
         </tr>
     </tbody>
 </table>
 
 <ul class="pagenav">
-    <li><a href="" class="pagenav-prev">prev</a></li>
-    <li><a href="" class="active">1</a></li>
-    <li><a href="">2</a></li>
-    <li><a href="">3</a></li>
-    <li><a href="">4</a></li>
-    <li><a href="">5</a></li>
-    <li><a href="" class="pagenav-next">next</a></li>
+    <li><a href="" class="pagenav-prev" (click)="PagerService.setPage($event, 1)">first</a></li>
+    <li *ngFor="let number of PagerService.pager.numbers"><a [class.active]="number === PagerService.pager.curPage" href="{{number}}" (click)="PagerService.setPage($event, number)">{{number}}</a></li>
+    <li><a href="" class="pagenav-next" (click)="PagerService.setPage($event, PagerService.pager.totalPages)">last</a></li>
 </ul>
