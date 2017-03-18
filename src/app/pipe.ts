@@ -11,25 +11,32 @@ export class FromFilterPipe implements PipeTransform {
   constructor(private PagerService: PagerService) { };
 
   transform(array: any[], filter: any, fields: string[]): any[] {
-    if (!filter.trim())
-      return array
-    if (array == null) return null
-    let filterStr = filter.toString().toLowerCase()
+
+    if (!filter.trim()) {
+      if (array != undefined) {
+        this.PagerService.initPager(array);
+      }
+      return array;
+    }
+
+    if (array == null) return null;
+    let filterStr = filter.toString().toLowerCase();
 
     let newArray = array.filter(item =>
       fields.reduce((prev: boolean, value: string) => {
         if (item[value] === undefined)
-          throw new TypeError(`Field ${value} is not found`)
+          throw new TypeError(`Field ${value} is not found`);
 
-        let str = item[value]
+        let str = item[value];
 
         return prev || str.toString().toLowerCase().indexOf(filterStr) >= 0
       }, false)
-    )
+    );
 
-    this.PagerService.initPager(newArray)
+    this.PagerService.initPager(newArray);
+    this.PagerService.resetPage();
 
-    return newArray
+    return newArray;
   }
 }
 
@@ -41,23 +48,31 @@ export class DurationFilterPipe {
   constructor(private PagerService: PagerService) { };
 
   transform(array: any[], filter: number, fields: string[]): any[] {
-    if (filter == 0)
-      return array
-    if (array == null) return null
+    if (filter == 0) {
+      if (array != undefined) {
+        this.PagerService.initPager(array);
+      }
+      return array;
+    }
+
+
+    if (array == null) return null;
+
+
 
     let newArray = array.filter(item =>
       fields.reduce((prev: boolean, value: string) => {
         if (item[value] === undefined)
-          throw new TypeError(`Field ${value} is not found`)
+          throw new TypeError(`Field ${value} is not found`);
 
-        let num = item[value]
+        let num = item[value];
 
         return prev || num < filter
       }, false)
-    )
+    );
 
-    this.PagerService.initPager(newArray)
+    this.PagerService.initPager(newArray);
 
-    return newArray
+    return newArray;
   }
 }

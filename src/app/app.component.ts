@@ -18,22 +18,22 @@ export class AppComponent implements OnInit {
 
   constructor(private MessageService: MessageService, private durationFilter: DurationFilterPipe, private PagerService: PagerService) { };
 
-  MessagesList: Message[]
-  filterDate: string = ''
-  filterNumber: string
-  filterDuration: number
+  MessagesList: Message[];
+  filterDate: string = '';
+  filterNumber: string;
+  filterDuration: number = 0;
 
   pager = {
-    numOfItems: 10,
-    curPage: 1,
+    numOfItems: this.PagerService.getNumOfItems(),
+    curPage: this.PagerService.getCurPage(),
     totalPages: 0,
     numbers: Array()
-  }
+  };
 
   getMessages(): void {
     //this.MessageService.getMessages();
     this.MessageService.getMessages().subscribe(data => {
-      this.MessagesList = data
+      this.MessagesList = data;
       this.PagerService.initPager(this.MessagesList)
     });
   }
@@ -42,9 +42,9 @@ export class AppComponent implements OnInit {
   }
 
   resetForm(): void {
-    this.filterDate = ''
-    this.filterNumber = ''
-    this.filterDuration = null
+    this.filterDate = '';
+    this.filterNumber = '';
+    this.filterDuration = 0;
     this.PagerService.initPager(this.MessagesList)
   }
 
