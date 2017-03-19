@@ -26,21 +26,23 @@ export class MessageService {
   }
 
   private extractData(res: Response) {
-    let parser = new DOMParser()
-    let xmlDoc = parser.parseFromString(res.text(), "text/xml")
-    let MESSAGES: Message[] = []
+    let parser = new DOMParser();
+    let xmlDoc = parser.parseFromString(res.text(), "text/xml");
+    let MESSAGES: Message[] = [];
     if (xmlDoc.hasChildNodes()) {
-      let chldrn = xmlDoc.getElementsByTagName("Data")
+      let chldrn = xmlDoc.getElementsByTagName("Data");
       //console.log(chldrn[5])
       for (let i = 0; i < chldrn.length; i++) {
-        let message = new Message()
-		message.id = i
-        message.Received = chldrn[i].children[0].textContent
-        message.From = chldrn[i].children[1].textContent
-        message.Duration = parseInt(chldrn[i].children[5].textContent)
-        message.MIME = chldrn[i].children[4].children[0].getAttribute('subtype')
-        message.Filename = chldrn[i].children[4].children[0].getAttribute('Disposition-filename')
-        MESSAGES[i] = message
+        let message = new Message();
+		    message.id = i;
+        // message.Received = chldrn[i].children[0].textContent;
+        message.Received = new Date(chldrn[i].children[0].textContent);
+
+        message.From = chldrn[i].children[1].textContent;
+        message.Duration = parseInt(chldrn[i].children[5].textContent);
+        message.MIME = chldrn[i].children[4].children[0].getAttribute('subtype');
+        message.Filename = chldrn[i].children[4].children[0].getAttribute('Disposition-filename');
+        MESSAGES[i] = message;
       }
     }
     return MESSAGES || [];

@@ -20,27 +20,27 @@ constructor(private PagerService: PagerService) { };
       "Last30Days": [moment().subtract(29, "days"), moment()],
       "ThisMonth": [moment().startOf("month"), moment().endOf("month")],
       "LastYear": [moment().subtract(1, "year").startOf("year"), moment().subtract(1, "year").endOf("year")]
-    }
-    if (array == null) return null
+    };
+    if (array == null) return null;
 
-    if (typeof filter === 'undefined' || !filter) return array
+    if (typeof filter === 'undefined' || !filter) return array;
 
-    let filterStr = filter.toString().toLowerCase()
-    let selectedRange = ranges[filter]
+    let filterStr = filter.toString().toLowerCase();
+    let selectedRange = ranges[filter];
 
     let newArray = array.filter(item =>
       fields.reduce((prev: boolean, value: string) => {
         if (item[value] === undefined)
-          throw new TypeError(`Field ${value} is not found`)
+          throw new TypeError(`Field ${value} is not found`);
 
-        let curMoment = moment(item[value])
+        let curMoment = moment(item[value]);
 
         return prev || (!(curMoment.isBefore(selectedRange[0]) || curMoment.isAfter(selectedRange[1])))
 
       }, false)
-    )
+    );
 
-    this.PagerService.initPager(newArray)
+    this.PagerService.initPager(newArray);
 
     return newArray
   }
@@ -56,13 +56,13 @@ constructor(private PagerService: PagerService) { };
 
   transform(item: any): any {
 
-    if (item == null) return null
+    if (item == null) return null;
 
     function pad(num: number): string {
       return ("0" + num).slice(-2);
     }
     function mmss(secs: number): string {
-      var minutes = Math.floor(secs / 60);
+      let minutes = Math.floor(secs / 60);
       secs = secs % 60;
       minutes = minutes % 60;
       return pad(minutes) + ":" + pad(secs);

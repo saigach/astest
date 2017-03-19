@@ -18,8 +18,9 @@
             <input #filterInputNumber (keyup)="0" name="filterNumber" type="text" class="form-input search-field" [(ngModel)]="filterNumber">
         </div>
         <div class="col-1-4">
-            <label for="">Длительность</label>
-            <select #filterInputDuration name="filterDuration" id="" class="form-input" [(ngModel)]="filterDuration">
+            <label for="duration">Длительность</label>
+            <select #filterInputDuration name="filterDuration" id="duration" class="form-input" [(ngModel)]="filterDuration">
+                <option value="0">Все</option>
                 <option value="60">до 1 минуты</option>
                 <option value="180">до 3 минут</option>
                 <option value="300">до 5 минут</option>
@@ -33,7 +34,7 @@
     </div>
 </form>
 
-<table class="messages-list">
+<table class="messages-list" *ngIf="MessagesList!=undefined&&(MessagesList | fromFilter : filterInputNumber.value : ['From'] | dateFilter : filterInputDate.value : ['Received'] | durationFilter : filterInputDuration.value : ['Duration']).length > 0">
     <thead>
         <tr>
             <th>Дата</th>
@@ -43,10 +44,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let msg of (MessagesList | fromFilter : filterInputNumber.value : ['From'] | dateFilter : filterInputDate.value : ['Received'] | durationFilter : filterInputDuration.value : ['Duration'] | slice:PagerService.pager.curPage:(PagerService.pager.curPage+PagerService.pager.numOfItems))">
-            <td>{{msg.Received | date:'dd.MM HH:mm'}}</td>
+        <tr *ngFor="let msg of (MessagesList | fromFilter : filterInputNumber.value : ['From'] | dateFilter : filterInputDate.value : ['Received'] | durationFilter : filterInputDuration.value : ['Duration'] | slice:((PagerService.pager.curPage-1)*PagerService.pager.numOfItems):(PagerService.pager.curPage*PagerService.pager.numOfItems))">
+            <td>{{msg.Received | date:'dd.MM.yyyy HH:mm'}}</td>
             <td>{{msg.From}}</td>
-            <td><audio controls="controls" preload="none">
+            <td><audio controls="controls" preload="none" >
                   <source type="audio/wav" src="/media/{{msg.Filename}}"/>
               </audio> {{msg.Duration | secPipe}}</td>
             <td>
@@ -56,8 +57,12 @@
     </tbody>
 </table>
 
-<ul class="pagenav">
-    <li><a href="" class="pagenav-prev" (click)="PagerService.setPage($event, 1)">first</a></li>
+<div class="messages-list" *ngIf="MessagesList!=undefined&&(MessagesList | fromFilter : filterInputNumber.value : ['From'] | dateFilter : filterInputDate.value : ['Received'] | durationFilter : filterInputDuration.value : ['Duration']).length == 0">
+  Записей удовлетворяющих фильтрам нет.
+</div>
+
+<ul class="pagenav" *ngIf="MessagesList!=undefined&&(MessagesList | fromFilter : filterInputNumber.value : ['From'] | dateFilter : filterInputDate.value : ['Received'] | durationFilter : filterInputDuration.value : ['Duration']).length > 0">
+    <li [class.pagenav-gray]="PagerService.pager.curPage==1"><a href="" class="pagenav-prev" (click)="PagerService.setPage($event, PagerService.pager.curPage-1)">first</a></li>
     <li *ngFor="let number of PagerService.pager.numbers"><a [class.active]="number === PagerService.pager.curPage" href="{{number}}" (click)="PagerService.setPage($event, number)">{{number}}</a></li>
-    <li><a href="" class="pagenav-next" (click)="PagerService.setPage($event, PagerService.pager.totalPages)">last</a></li>
+    <li [class.pagenav-gray]="PagerService.pager.curPage==PagerService.pager.totalPages"><a href="" class="pagenav-next" (click)="PagerService.setPage($event, PagerService.pager.curPage+1)">last</a></li>
 </ul>

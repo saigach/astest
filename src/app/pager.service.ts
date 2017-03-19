@@ -9,21 +9,27 @@ export class PagerService {
         curPage: 1,
         totalPages: 0,
         numbers: Array()
-    }
+    };
 
     public initPager(array: any[]): void {
-        this.pager.totalPages = Math.ceil(array.length / this.pager.numOfItems)
+        this.pager.totalPages = Math.ceil(array.length / this.pager.numOfItems);
         this.pager.numbers = Array(this.pager.totalPages).fill(1).map((x,i)=>i+1);
     }
     public setPage($event: Event, num: number): void {
-        $event.preventDefault()
-        this.pager.curPage = num
+        $event.preventDefault();
+        if (num <= this.pager.totalPages && num != 0) {
+          this.pager.curPage = num;
+        }
     }
 
     public getCurPage(): number {
-        return this.pager.curPage
+        return this.pager.curPage;
     }
     public getNumOfItems(): number {
-        return this.pager.numOfItems
+        return this.pager.numOfItems;
     }
+
+  public resetPage(): void {
+    this.pager.curPage = 1;
+  }
 }

@@ -241,6 +241,18 @@ Nav *******************/
 	margin-top: -5px;
 }
 
+.pagenav-hide {
+  display: none !important;
+}
+
+.pagenav li.pagenav-gray a.pagenav-next {
+  border: 1px solid #939393 !important;
+}
+
+.pagenav li.pagenav-gray a.pagenav-prev {
+  border: 1px solid #939393 !important;
+}
+
 /****************
 loader *******************/
 .loader-ico {
